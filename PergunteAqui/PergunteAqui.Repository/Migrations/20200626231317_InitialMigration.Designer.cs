@@ -10,7 +10,7 @@ using PergunteAqui.Repository;
 namespace PergunteAqui.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200623222224_InitialMigration")]
+    [Migration("20200626231317_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace PergunteAqui.Infra.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TransferService.Domain.Address", b =>
+            modelBuilder.Entity("PergunteAqui.Domain.Address", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace PergunteAqui.Infra.Data.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("TransferService.Domain.LogEntry", b =>
+            modelBuilder.Entity("PergunteAqui.Domain.LogEntry", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,7 +105,7 @@ namespace PergunteAqui.Infra.Data.Migrations
                     b.ToTable("LogEntries");
                 });
 
-            modelBuilder.Entity("TransferService.Domain.User", b =>
+            modelBuilder.Entity("PergunteAqui.Domain.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,11 +171,11 @@ namespace PergunteAqui.Infra.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TransferService.Domain.Address", b =>
+            modelBuilder.Entity("PergunteAqui.Domain.Address", b =>
                 {
-                    b.HasOne("TransferService.Domain.User", null)
+                    b.HasOne("PergunteAqui.Domain.User", null)
                         .WithOne("Address")
-                        .HasForeignKey("TransferService.Domain.Address", "UserId")
+                        .HasForeignKey("PergunteAqui.Domain.Address", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
