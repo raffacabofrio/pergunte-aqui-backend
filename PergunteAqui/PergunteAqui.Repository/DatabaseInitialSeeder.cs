@@ -1,6 +1,7 @@
 ﻿using PergunteAqui.Domain;
 using PergunteAqui.Domain.Enums;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PergunteAqui.Repository
@@ -112,7 +113,73 @@ namespace PergunteAqui.Repository
                     }
                 };
 
+
+                // ------------------------
+                // Perguntas               
+
+                var question1 = new Question()
+                {
+                    User = "Usuário 01",
+                    Text = "Qual o sentido da vida?",
+                    Answers = new List<Answer>(),
+                    Likes = new List<Like>()
+                };
+
+                var question2 = new Question()
+                {
+                    User = "Usuário 01",
+                    Text = "Quem é mais forte? Goku ou Superman?",
+                    Answers = new List<Answer>(),
+                    Likes = new List<Like>()
+                };
+
+                var question3 = new Question()
+                {
+                    User = "Usuário 01",
+                    Text = "Qual o melhor? Java ou .Net?",
+                    Answers = new List<Answer>(),
+                    Likes = new List<Like>()
+                };
+
+
+                // ------------------------
+                // Respostas
+
+                var answer1 = new Answer()
+                {
+                    User = "Usuário 02",
+                    Text = "Deus, família e trabalho",
+                };
+
+                var answer2 = new Answer()
+                {
+                    User = "Usuário 03",
+                    Text = "Ser feliz e viver o momento"
+                };
+
+                question1.Answers.Add(answer1);
+                question1.Answers.Add(answer2);
+
+
+                // ------------------------
+                // Likes
+
+                var like1 = new Like()
+                {
+                    User = "Usuário 02",
+                };
+
+                var like2 = new Like()
+                {
+                    User = "Usuário 03",
+                };
+
+                question1.Likes.Add(like1);
+                question1.Likes.Add(like2);
+
+
                 _context.Users.AddRange(user1, user2, user3, user4);
+                _context.Questions.AddRange(question1, question2, question3);
                 _context.SaveChanges();
             }
 
