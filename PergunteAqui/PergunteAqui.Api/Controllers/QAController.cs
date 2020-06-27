@@ -58,5 +58,24 @@ namespace PergunteAqui.Api.Controllers
             return Ok();
         }
 
+        [HttpGet("Question/{questionId}/Answers")]
+        public IList<AnswerVM> GetAnswers(Guid questionId)
+        {
+            var answers = _QAService.GetAnswers(questionId);
+            var answersVM = _mapper.Map<List<AnswerVM>>(answers);
+
+            return answersVM;
+        }
+
+        //[HttpPost("AddQuestion")]
+        //public IActionResult AddQuestion([FromBody] QuestionAddVM questionAddVM)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+
+        //    _QAService.AddQuestion(questionAddVM.Text, questionAddVM.User);
+        //    return Ok();
+        //}
+
     }
 }

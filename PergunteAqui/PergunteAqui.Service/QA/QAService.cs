@@ -22,13 +22,19 @@ namespace PergunteAqui.Service
     public class QAService : BaseService<Question>, IQAService
     {
         private readonly IQuestionRepository _questionRepository;
+        private readonly IAnswerRepository _answerRepository;
+        private readonly ILikeRepository _likeRepository;
 
 
         public QAService(IQuestionRepository questionRepository,
             IUnitOfWork unitOfWork,
-            IValidator<Question> validator) : base(questionRepository, unitOfWork, validator)
+            IValidator<Question> validator,
+            IAnswerRepository answerRepository,
+            ILikeRepository likeRepository) : base(questionRepository, unitOfWork, validator)
         {
             _questionRepository = questionRepository;
+            _answerRepository = answerRepository;
+            _likeRepository = likeRepository;
         }
 
         public IList<Question> GetQuestions(string search = "")
@@ -55,6 +61,12 @@ namespace PergunteAqui.Service
             };
 
             _questionRepository.Insert(question);
+        }
+
+        public IList<Answer> GetAnswers(Guid questionId)
+        {
+            return _answerRepository.Get().Where(a => a.QuestionId == questionId)
+                .OrderByDescending(a => a.totalLikes).ToList();
         }
     }
 }

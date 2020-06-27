@@ -19,6 +19,8 @@ namespace PergunteAqui.Api.AutoMapper
 
             CreateMap<Question, QuestionVM>();
 
+            CreateMap<Answer, AnswerVM>();
+
         }
     }
 }

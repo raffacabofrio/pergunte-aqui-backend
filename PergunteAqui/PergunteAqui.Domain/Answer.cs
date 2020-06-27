@@ -8,6 +8,7 @@ namespace PergunteAqui.Domain
     {
         public string Text { get; set; }
         public string User { get; set; }
+        public Guid QuestionId { get; set; }
         public virtual Question Question { get; set; }
         public virtual IList<Like> Likes { get; set; }
 

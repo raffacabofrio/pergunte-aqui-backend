@@ -11,5 +11,6 @@ namespace PergunteAqui.Service
     {
         IList<Question> GetQuestions(string search);
         void AddQuestion(string text, string user);
+        IList<Answer> GetAnswers(Guid questionId);
     }
 }
