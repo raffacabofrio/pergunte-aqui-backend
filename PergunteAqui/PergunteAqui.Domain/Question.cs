@@ -10,5 +10,9 @@ namespace PergunteAqui.Domain
         public string User { get; set; }
         public virtual IList<Answer> Answers { get; set; }
         public virtual IList<Like> Likes { get; set; }
+
+        // for performance improvement on queries and searches.
+        public int totalLikes { get; set; } = 0;
+        public int totalAnswers { get; set; } = 0;
     }
 }
