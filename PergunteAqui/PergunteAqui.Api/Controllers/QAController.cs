@@ -10,6 +10,7 @@ using PergunteAqui.Api.Filters;
 using PergunteAqui.Api.ViewModels;
 using PergunteAqui.Domain;
 using PergunteAqui.Domain.Common;
+using PergunteAqui.Domain.Enums;
 using PergunteAqui.Domain.Exceptions;
 using PergunteAqui.Infra.CrossCutting.Identity;
 using PergunteAqui.Infra.CrossCutting.Identity.Interfaces;
@@ -38,17 +39,24 @@ namespace PergunteAqui.Api.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet("questions")]
-        public Result GetQuestions()
+        [HttpGet("Questions")]
+        public IList<QuestionVM> GetQuestions([FromQuery] string search = "")
         {
-            var questions = _QAService.GetQuestions();
+            var questions = _QAService.GetQuestions(search);
+            var questionsVM = _mapper.Map<List<QuestionVM>>(questions);
 
-            return new Result()
-            {
-                Value = questions
-            };
+            return questionsVM;
         }
 
+        [HttpPost("AddQuestion")]
+        public IActionResult AddQuestion([FromBody] QuestionAddVM questionAddVM)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            _QAService.AddQuestion(questionAddVM.Text, questionAddVM.User);
+            return Ok();
+        }
 
     }
 }
