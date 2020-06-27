@@ -11,6 +11,11 @@ Backend REST Api para o app pergunte aqui. É um projeto simples para mostrar co
 
 Não precisa fazer nenhuma configuração. Apenas rode o projeto no visual studio. Faça o mesmo no projeto frontend para experimentar o app completo.
 
+Também é possível rodar por linha de comando.
+```bash
+dotnet run --project PergunteAqui/PergunteAqui.api
+```
+
 # Documentação Swagger
 
 Todos os endpoints estão documentados no swagger. Rode o projeto e abra no seu navegador.
