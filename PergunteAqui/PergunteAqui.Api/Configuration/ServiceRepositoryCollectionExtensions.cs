@@ -17,13 +17,17 @@ namespace PergunteAqui.Api.Configuration
         {
             //services
             services.AddScoped<IUserService, UserService>();
-
+            services.AddScoped<IQAService, QAService>();
 
             //repositories
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IAnswerRepository, AnswerRepository>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
 
             //validators
             services.AddScoped<IValidator<User>, UserValidator>();
+            services.AddScoped<IValidator<Question>, QuestionValidator>();
 
             //Auth
             services.AddScoped<IApplicationSignInManager, ApplicationSignInManager>();
