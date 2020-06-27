@@ -68,5 +68,92 @@ namespace PergunteAqui.Service
             return _answerRepository.Get().Where(a => a.QuestionId == questionId)
                 .OrderByDescending(a => a.totalLikes).ToList();
         }
+
+        public void AddAnswer(Answer answer)
+        {
+            if (BadWordHelper.HasBadWord(answer.Text))
+                throw new BizException("Tem algum conteúdo indevido na sua resposta. Por favor revise.");
+
+            var question = _questionRepository.Find(answer.QuestionId);
+            if (question == null)
+                throw new BizException(BizException.Error.NotFound, "Não encontramos a pergunta selecionada.");
+            question.totalAnswers++;
+
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                _answerRepository.Insert(answer);
+                _questionRepository.Update(question);
+                _unitOfWork.Commit();
+            }
+            catch(Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw ex;
+            }
+
+        }
+
+        public void AddLike(Like like)
+        {
+            if((like.QuestionId == null && like.AnswerId == null) || (like.QuestionId != null && like.AnswerId != null))
+                throw new BizException("É obrigatório informar apenas um destino do Like.");
+
+            var question = _questionRepository.Find(like.QuestionId);
+            var answer = _answerRepository.Find(like.AnswerId);
+
+            if (question == null && answer == null)
+                throw new BizException(BizException.Error.NotFound, "Não encontramos o conteúdo selecionado.");
+
+            if (question != null)
+                AddLikeQuestion(like, question);
+            else
+                AddLikeAnswer(like, answer);
+
+        }
+
+        private void AddLikeQuestion(Like like, Question question)
+        {
+            var duplicatedLike = _likeRepository.Get().Where(l => l.User == like.User && l.QuestionId == like.QuestionId).Any();
+            if (duplicatedLike)
+                throw new BizException("Só pode curtir uma vez.");
+
+            question.totalLikes++;
+
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                _likeRepository.Insert(like);
+                _questionRepository.Update(question);
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw ex;
+            }
+        }
+
+        private void AddLikeAnswer(Like like, Answer answer)
+        {
+            var duplicatedLike = _likeRepository.Get().Where(l => l.User == like.User && l.AnswerId == like.AnswerId).Any();
+            if (duplicatedLike)
+                throw new BizException("Só pode curtir uma vez.");
+
+            answer.totalLikes++;
+
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                _likeRepository.Insert(like);
+                _answerRepository.Update(answer);
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw ex;
+            }
+        }
     }
 }

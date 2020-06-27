@@ -67,15 +67,24 @@ namespace PergunteAqui.Api.Controllers
             return answersVM;
         }
 
-        //[HttpPost("AddQuestion")]
-        //public IActionResult AddQuestion([FromBody] QuestionAddVM questionAddVM)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
+        [HttpPost("AddAnswer")]
+        public IActionResult AddAnswer([FromBody] AnswerAddVM answerAddVM)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        //    _QAService.AddQuestion(questionAddVM.Text, questionAddVM.User);
-        //    return Ok();
-        //}
+            var answer = _mapper.Map<Answer>(answerAddVM);
+
+            _QAService.AddAnswer(answer);
+            return Ok();
+        }
+
+        [HttpPost("AddLike")]
+        public IActionResult AddLike([FromBody] Like like)
+        {
+            _QAService.AddLike(like);
+            return Ok();
+        }
 
     }
 }

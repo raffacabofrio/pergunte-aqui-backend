@@ -30,7 +30,11 @@ namespace PergunteAqui.Api.AutoMapper
 
             #endregion [ User ]
 
-            
+            CreateMap<QuestionVM, Question>();
+
+            CreateMap<AnswerVM, Answer>();
+            CreateMap<AnswerAddVM, Answer>();
+
         }
     }
 }

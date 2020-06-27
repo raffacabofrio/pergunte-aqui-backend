@@ -11,6 +11,7 @@ namespace PergunteAqui.Api.ViewModels
         public int totalLikes { get; set; }
         public DateTime CreationDate { get; set; }
         public Guid Id { get; set; }
+        public Guid QuestionId { get; set; }
     }
 
     public class AnswerAddVM
@@ -20,5 +21,8 @@ namespace PergunteAqui.Api.ViewModels
 
         [Required]
         public string User { get; set; }
+
+        [Required]
+        public Guid QuestionId { get; set; }
     }
 }
