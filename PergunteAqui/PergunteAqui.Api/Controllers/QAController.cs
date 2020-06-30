@@ -48,6 +48,15 @@ namespace PergunteAqui.Api.Controllers
             return questionsVM;
         }
 
+        [HttpGet("Question/{questionId}")]
+        public QuestionVM GetQuestion([FromRoute] Guid questionId)
+        {
+            var question = _QAService.GetQuestion(questionId);
+            var questionVM = _mapper.Map<QuestionVM>(question);
+
+            return questionVM;
+        }
+
         [HttpPost("AddQuestion")]
         public IActionResult AddQuestion([FromBody] QuestionAddVM questionAddVM)
         {

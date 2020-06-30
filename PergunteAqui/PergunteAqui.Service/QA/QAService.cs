@@ -49,6 +49,16 @@ namespace PergunteAqui.Service
             return query.ToList();
         }
 
+        public Question GetQuestion(Guid id)
+        {
+            var question = _questionRepository.Find(id);
+
+            if (question == null)
+                throw new BizException(BizException.Error.NotFound, "Não encontramos o conteúdo selecionado.");
+
+            return question;
+        }
+
         public void AddQuestion(string text, string user)
         {
             if (BadWordHelper.HasBadWord(text))

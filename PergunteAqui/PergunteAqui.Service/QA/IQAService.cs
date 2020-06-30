@@ -16,5 +16,6 @@ namespace PergunteAqui.Service
         void AddAnswer(Answer answer);
 
         void AddLike(Like like);
+        Question GetQuestion(Guid id);
     }
 }
