@@ -122,7 +122,9 @@ namespace PergunteAqui.Repository
                     User = "Usuário 01",
                     Text = "Qual o sentido da vida?",
                     Answers = new List<Answer>(),
-                    Likes = new List<Like>()
+                    Likes = new List<Like>(),
+                    totalLikes = 2,
+                    totalAnswers = 2
                 };
 
                 var question2 = new Question()
